@@ -13,34 +13,35 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 @Entity
 @Table(name = "tb_postagens")
 public class Postagem {
-	//criar indetificador que gera automaticamente
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	//forçar o usuario a digitar um titulo que os parametros seja de 5 a 100 e caso o usuatio nao digite exiba a mensagem
-	@NotNull(message = "O atributo título é obrigatorio!")
-	@Size(min = 5, max = 100, message = "O atributo título deve ter no minimo 5 e no maximo 100 caracteres")
-	private String titulo;
-	//forçar o usuario a digitar um titulo que os parametros seja de 5 a 100 e caso o usuatio nao digite exiba a mensagem
-	@NotNull(message = "O atributo texto é obrigatorio!")
-	@Size(min = 5, max = 100, message = "O atributo texto deve ter no minimo 5 e no maximo 1000 caracteres")
-	private String texto;
-	//prenche data pegando do sistemas
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date data = new java.sql.Date(System.currentTimeMillis()); //para add os milisegundos
 	
+	@NotNull(message = "O atributo título é obrigatório!")
+	@Size(min = 5, max = 100, message = "O atributo título deve ter no mínimo 5 e no máximo 100 caracteres")
+	private String titulo;
+	
+	@NotNull(message = "O atributo texto é obrigatório!")
+	@Size(min = 5, max = 1000, message = "O atributo textoo deve ter no mínimo 5 e no máximo 1000 caracteres")
+	private String texto;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date data = new java.sql.Date(System.currentTimeMillis());
+
 	@ManyToOne
 	@JsonIgnoreProperties("postagem")
 	private Tema tema;
 	
-	//Get e settings 
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Usuario usuario;
+	
 	public long getId() {
 		return id;
 	}
@@ -72,6 +73,21 @@ public class Postagem {
 	public void setData(Date data) {
 		this.data = data;
 	}
-	
+
+	public Tema getTema() {
+		return tema;
+	}
+
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
 }

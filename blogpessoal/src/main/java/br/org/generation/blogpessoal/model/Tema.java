@@ -15,18 +15,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_temas")
-public class Tema {
-
-	@Id
+public class Tema{
+	    
+	    @Id	
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private long id;
-	
+		
 		@NotNull(message = "O atributo Descrição deve ser obrigatório")
 		private String descricao;
-
+		
 		@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL)
 		@JsonIgnoreProperties("tema")
 		private List<Postagem> postagem;
+		
 		
 		public long getId() {
 			return id;
@@ -43,5 +44,14 @@ public class Tema {
 		public void setDescricao(String descricao) {
 			this.descricao = descricao;
 		}
+
+		public List<Postagem> getPostagem() {
+			return postagem;
+		}
+
+		public void setPostagem(List<Postagem> postagem) {
+			this.postagem = postagem;
+		}
+		
 		
 }
